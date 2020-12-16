@@ -16,6 +16,12 @@
                         {{ __('user.dashboard') }}
                     </x-nav-link>
                 </div>
+
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('task.index')" :active="request()->routeIs('task.*')">
+                        {{ __('user.tasks_label') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

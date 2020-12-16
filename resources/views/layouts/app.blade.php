@@ -24,6 +24,8 @@
                 </div>
             </header>
 
+            @include('layouts.alert')
+
             <!-- Page Content -->
             <main>
                 {{ $slot }}
