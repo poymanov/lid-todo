@@ -5,13 +5,29 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Task\CreateRequest;
+use App\Services\TaskService;
 use App\UseCase\Task\Create;
 
 class TaskController extends Controller
 {
+    /**
+     * @var TaskService
+     */
+    private TaskService $taskService;
+
+    /**
+     * @param TaskService $taskService
+     */
+    public function __construct(TaskService $taskService)
+    {
+        $this->taskService = $taskService;
+    }
+
     public function index()
     {
-        return view('task.index');
+        $tasks = $this->taskService->getAllByUserOrderedByCompleted(auth()->id());
+
+        return view('task.index', compact('tasks'));
     }
 
     public function create()

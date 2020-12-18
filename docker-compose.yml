@@ -31,8 +31,9 @@ services:
     image: mysql:5.7
     volumes:
       - db:/var/lib/mysql
-    env_file:
-      - ./docker/db/config/.env
+    environment:
+      MYSQL_DATABASE: lid_todo
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
     ports:
       - "3306:3306"
   node-watch:
