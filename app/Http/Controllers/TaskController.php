@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Task\CreateRequest;
+use App\Models\Task;
 use App\Services\TaskService;
 use App\UseCase\Task\Create;
 
@@ -49,5 +50,12 @@ class TaskController extends Controller
         }
 
         return redirect(route('task.index'))->with('alert.success', __('task.created_successfully'));
+    }
+
+    public function show(Task $task)
+    {
+        $this->authorize('view', $task);
+
+        return view('task.show', compact('task'));
     }
 }

@@ -12,7 +12,7 @@
                     <div class="mb-5">
                         <a href="{{ route('task.create') }}"
                            class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                            Создать
+                            {{ __('task.create') }}
                         </a>
                     </div>
 
@@ -25,11 +25,11 @@
                                         <tr>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Наименование
+                                                {{ __('task.title') }}
                                             </th>
                                             <th scope="col"
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                                                Статус
+                                                {{ __('task.status') }}
                                             </th>
                                         </tr>
                                         </thead>
@@ -38,24 +38,18 @@
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     <div class="text-sm font-medium text-gray-900">
-                                                        {{ $task->title }}
+                                                        <a href="{{ route('task.show', $task) }}">{{ $task->title }}</a>
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap">
                                                     @if($task->completed)
-                                                        <span
-                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">
-                          Завершен
-                        </span>
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">{{ __('task.completed') }}</span>
+                                                    @else
+                                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800">{{ __('task.not_completed') }}</span>
+                                                    @endif
                                                 </td>
-                                                @else
-                                                    <span
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800">
-                          Не завершен
-                        </span>
-                                                    </td>
-                                                @endif
                                             </tr>
+
 
                                         @endforeach
                                         </tbody>

@@ -25,6 +25,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('', [TaskController::class, 'index'])->name('index');
         Route::get('create', [TaskController::class, 'create'])->name('create');
         Route::post('create', [TaskController::class, 'store'])->name('store');
+        Route::get('{task}', [TaskController::class, 'show'])->name('show');
     });
 });
 

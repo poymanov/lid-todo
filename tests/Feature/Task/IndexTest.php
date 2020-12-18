@@ -52,7 +52,7 @@ class IndexTest extends TestCase
         $this->signIn();
         $response = $this->get(self::TASKS_URL);
 
-        $response->assertSee('Наименование');
+        $response->assertSee('Название');
         $response->assertSee('Статус');
     }
 
