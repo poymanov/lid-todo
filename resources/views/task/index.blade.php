@@ -48,9 +48,10 @@
                                                         <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-green-800">{{ __('task.not_completed') }}</span>
                                                     @endif
                                                 </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <a href="{{ route('task.edit', $task) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('task.edit') }}</a>
+                                                </td>
                                             </tr>
-
-
                                         @endforeach
                                         </tbody>
                                     </table>

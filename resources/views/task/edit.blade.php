@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('user.create_task_header') }}
+            {{ __('task.edit_task_header') }} - {{ $task->title }}
         </h2>
     </x-slot>
 
@@ -10,15 +10,15 @@
         @if(count($errors))
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-2">
-                    <div class="p-6 bg-red-300 border-b border-gray-200">{{ __('task.create_validation_failed') }}</div>
+                    <div class="p-6 bg-red-300 border-b border-gray-200">{{ __('task.edit_validation_failed') }}</div>
                 </div>
             </div>
         @endif
 
-        @if(session('create-failed'))
+        @if(session('update-failed'))
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 mb-3">
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg mb-2">
-                    <div class="p-6 bg-red-300 border-b border-gray-200">{{ session('create-failed') }}</div>
+                    <div class="p-6 bg-red-300 border-b border-gray-200">{{ session('update-failed') }}</div>
                 </div>
             </div>
         @endif
@@ -34,13 +34,14 @@
                     </div>
                     <div>
                         <div class="mt-5 md:mt-0 md:col-span-2">
-                            <form action="{{ route('task.store') }}" method="POST">
+                            <form action="{{ route('task.update', $task) }}" method="POST">
                                 @csrf
+                                @method('patch')
                                 <div class="shadow sm:rounded-md sm:overflow-hidden">
                                     <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
                                         <div class="col-span-6 sm:col-span-3">
                                             <label for="title" class="block text-sm font-medium text-gray-700">{{ __('task.title') }}</label>
-                                            <input type="text" name="title" id="title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('title') }}" required>
+                                            <input type="text" name="title" id="title" class="mt-1 focus:ring-indigo-500 focus:border-indigo-500 block w-full shadow-sm sm:text-sm border-gray-300 rounded-md" value="{{ old('title', $task->title) }}" required>
                                             @if ($errors->has('title'))
                                                 @foreach($errors->get('title') as $error)
                                                     <span class="text-red-500">{{ $error }}</span>
@@ -53,7 +54,7 @@
                                                 {{ __('task.description') }}
                                             </label>
                                             <div class="mt-1">
-                                                <textarea id="description" name="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md" required>{{ old('description') }}</textarea>
+                                                <textarea id="description" name="description" rows="3" class="shadow-sm focus:ring-indigo-500 focus:border-indigo-500 mt-1 block w-full sm:text-sm border-gray-300 rounded-md" required>{{ old('description', $task->description) }}</textarea>
                                             </div>
                                             @if ($errors->has('description'))
                                                 @foreach($errors->get('description') as $error)
@@ -65,7 +66,7 @@
                                     </div>
                                     <div class="px-4 py-3 bg-gray-50 text-right sm:px-6">
                                         <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                                            {{ __('task.create') }}
+                                            {{ __('task.save') }}
                                         </button>
                                     </div>
                                 </div>

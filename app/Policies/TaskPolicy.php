@@ -13,7 +13,7 @@ class TaskPolicy
     /**
      * Determine whether the user can view any models.
      *
-     * @param  \App\Models\User  $user
+     * @param  User  $user
      * @return mixed
      */
     public function viewAny(User $user)
@@ -53,7 +53,7 @@ class TaskPolicy
      */
     public function update(User $user, Task $task)
     {
-        //
+        return $user->id == $task->user_id;
     }
 
     /**

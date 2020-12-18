@@ -62,7 +62,6 @@ class ShowTest extends TestCase
         $response = $this->get(self::BASE_URL . $task->id);
         $response->assertSee($task->title);
         $response->assertSee($task->description);
-
     }
 
     /**

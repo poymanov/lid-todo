@@ -5,9 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Task\CreateRequest;
+use App\Http\Requests\Task\UpdateRequest;
 use App\Models\Task;
 use App\Services\TaskService;
 use App\UseCase\Task\Create;
+use App\UseCase\Task\Update;
 
 class TaskController extends Controller
 {
@@ -57,5 +59,30 @@ class TaskController extends Controller
         $this->authorize('view', $task);
 
         return view('task.show', compact('task'));
+    }
+
+    public function edit(Task $task)
+    {
+        $this->authorize('update', $task);
+
+        return view('task.edit', compact('task'));
+    }
+
+    public function update(UpdateRequest $request, Task $task, Update\Handler $handler)
+    {
+        $this->authorize('update', $task);
+
+        $command = new Update\Command();
+        $command->id = $task->id;
+        $command->title = $request->get('title');
+        $command->description = $request->get('description');
+
+        try {
+            $handler->handle($command);
+        } catch (\Throwable $e) {
+            return back()->with('update-failed', $e->getMessage());
+        }
+
+        return redirect(route('task.index'))->with('alert.success', __('task.updated_successfully'));
     }
 }
