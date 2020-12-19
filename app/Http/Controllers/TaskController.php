@@ -10,6 +10,7 @@ use App\Models\Task;
 use App\Services\TaskService;
 use App\UseCase\Task\Create;
 use App\UseCase\Task\Update;
+use App\UseCase\Task\Delete;
 
 class TaskController extends Controller
 {
@@ -84,5 +85,21 @@ class TaskController extends Controller
         }
 
         return redirect(route('task.index'))->with('alert.success', __('task.updated_successfully'));
+    }
+
+    public function destroy(Task $task, Delete\Handler $handler)
+    {
+        $this->authorize('delete', $task);
+
+        $command = new Delete\Command();
+        $command->id = $task->id;
+
+        try {
+            $handler->handle($command);
+        } catch (\Throwable $e) {
+            return back()->with('alert.error', $e->getMessage());
+        }
+
+        return redirect(route('task.index'))->with('alert.success', __('task.delete_successfully'));
     }
 }

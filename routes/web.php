@@ -28,6 +28,7 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('{task}', [TaskController::class, 'show'])->name('show');
         Route::get('{task}/edit', [TaskController::class, 'edit'])->name('edit');
         Route::patch('{task}', [TaskController::class, 'update'])->name('update');
+        Route::delete('{task}', [TaskController::class, 'destroy'])->name('delete');
     });
 });
 

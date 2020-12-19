@@ -31,6 +31,7 @@
                                                 class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                                 {{ __('task.status') }}
                                             </th>
+                                            <th></th>
                                         </tr>
                                         </thead>
                                         <tbody class="bg-white divide-y divide-gray-200">
@@ -49,7 +50,14 @@
                                                     @endif
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                                                    <a href="{{ route('task.edit', $task) }}" class="text-indigo-600 hover:text-indigo-900">{{ __('task.edit') }}</a>
+                                                    <a href="{{ route('task.edit', $task) }}" class="text-indigo-600 hover:text-indigo-900 mr-2">{{ __('task.edit') }}</a>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
+                                                    <form action="{{ route('task.delete', $task) }}" method="post" onsubmit="return confirm('{{ __('task.confirm_delete') }}')">
+                                                        @csrf
+                                                        @method('delete')
+                                                        <button class="text-red-600 hover:text-red-900">{{ __('task.delete') }}</button>
+                                                    </form>
                                                 </td>
                                             </tr>
                                         @endforeach
