@@ -24,4 +24,12 @@ return [
     'delete_failed'            => 'Failed to delete the task',
     'to_task_list'             => 'Go to the task list',
     'confirm_delete'           => 'Delete a task?',
+    'complete'                 => 'Complete',
+    'incomplete'               => 'Incomplete',
+    'complete_successfully'    => 'The task completed successfully',
+    'incomplete_successfully'  => 'Completing the task successfully cancelled',
+    'already_completed'        => 'The task is already completed',
+    'already_incomplete'       => 'The task is not completed yet',
+    'complete_failed'          => 'Task completion error',
+    'incomplete_failed'        => 'Error cancel completion of the task',
 ];

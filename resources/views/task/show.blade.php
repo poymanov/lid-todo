@@ -18,8 +18,21 @@
                         <form action="{{ route('task.delete', $task) }}" method="post" onsubmit="return confirm('{{ __('task.confirm_delete') }}')">
                             @csrf
                             @method('delete')
-                            <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">{{ __('task.delete') }}</button>
+                            <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 mr-2">{{ __('task.delete') }}</button>
                         </form>
+                        @if($task->completed)
+                            <form action="{{ route('task.incomplete', $task) }}" method="post">
+                                @csrf
+                                @method('patch')
+                                <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">{{ __('task.incomplete') }}</button>
+                            </form>
+                        @else
+                            <form action="{{ route('task.complete', $task) }}" method="post">
+                                @csrf
+                                @method('patch')
+                                <button class="inline-flex items-center px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-yellow-600 hover:bg-yellow-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-yellow-500">{{ __('task.complete') }}</button>
+                            </form>
+                        @endif
                     </div>
                     <div class="border-t border-gray-200">
                         <dl>

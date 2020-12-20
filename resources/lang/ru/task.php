@@ -24,4 +24,12 @@ return [
     'delete_failed'            => 'Не удалось удалить задачу',
     'to_task_list'             => 'К списку задач',
     'confirm_delete'           => 'Удалить задачу?',
+    'complete'                 => 'Завершить',
+    'incomplete'               => 'Отменить завершение',
+    'complete_successfully'    => 'Задача успешно завершена',
+    'incomplete_successfully'  => 'Завершение задачи успешно отменено',
+    'already_completed'        => 'Задача уже завершена',
+    'already_incomplete'       => 'Задача ещё не завершена',
+    'complete_failed'          => 'Ошибка завершения задачи',
+    'incomplete_failed'        => 'Ошибка отмены завершения задачи',
 ];

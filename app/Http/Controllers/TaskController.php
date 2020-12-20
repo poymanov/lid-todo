@@ -11,6 +11,8 @@ use App\Services\TaskService;
 use App\UseCase\Task\Create;
 use App\UseCase\Task\Update;
 use App\UseCase\Task\Delete;
+use App\UseCase\Task\Complete;
+use App\UseCase\Task\Incomplete;
 
 class TaskController extends Controller
 {
@@ -97,9 +99,41 @@ class TaskController extends Controller
         try {
             $handler->handle($command);
         } catch (\Throwable $e) {
-            return back()->with('alert.error', $e->getMessage());
+            return redirect(route('task.index'))->with('alert.error', $e->getMessage());
         }
 
         return redirect(route('task.index'))->with('alert.success', __('task.delete_successfully'));
+    }
+
+    public function complete(Task $task, Complete\Handler $handler)
+    {
+        $this->authorize('update', $task);
+
+        $command = new Complete\Command();
+        $command->id = $task->id;
+
+        try {
+            $handler->handle($command);
+        } catch (\Throwable $e) {
+            return redirect(route('task.index'))->with('alert.error', $e->getMessage());
+        }
+
+        return redirect(route('task.index'))->with('alert.success', __('task.complete_successfully'));
+    }
+
+    public function incomplete(Task $task, Incomplete\Handler $handler)
+    {
+        $this->authorize('update', $task);
+
+        $command = new Incomplete\Command();
+        $command->id = $task->id;
+
+        try {
+            $handler->handle($command);
+        } catch (\Throwable $e) {
+            return redirect(route('task.index'))->with('alert.error', $e->getMessage());
+        }
+
+        return redirect(route('task.index'))->with('alert.success', __('task.incomplete_successfully'));
     }
 }

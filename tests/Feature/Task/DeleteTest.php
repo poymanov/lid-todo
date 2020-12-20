@@ -50,7 +50,7 @@ class DeleteTest extends TestCase
     }
 
     /**
-     * Успешное удалени задачи
+     * Успешное удаление задачи
      */
     public function test_delete_successful()
     {

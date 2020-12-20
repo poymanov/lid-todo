@@ -29,6 +29,8 @@ Route::group(['middleware' => 'auth'], function () {
         Route::get('{task}/edit', [TaskController::class, 'edit'])->name('edit');
         Route::patch('{task}', [TaskController::class, 'update'])->name('update');
         Route::delete('{task}', [TaskController::class, 'destroy'])->name('delete');
+        Route::patch('{task}/complete', [TaskController::class, 'complete'])->name('complete');
+        Route::patch('{task}/incomplete', [TaskController::class, 'incomplete'])->name('incomplete');
     });
 });
 

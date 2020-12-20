@@ -65,6 +65,20 @@ class ShowTest extends TestCase
     }
 
     /**
+     * На странице просмотра незавершенной задачи отображается кнопка завершения
+     */
+    public function test_complete_button_rendered()
+    {
+        $user = User::factory()->create();
+        $this->signIn($user);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+
+        $response = $this->get(self::BASE_URL . $task->id);
+        $response->assertSee('Завершить');
+    }
+
+    /**
      * Попытка просмотра задачи другого пользователя
      */
     public function test_another_user_task_show_page()
