@@ -20,4 +20,9 @@ class Command
      * @var string
      */
     public string $description;
+
+    /**
+     * @var array
+     */
+    public array $steps;
 }

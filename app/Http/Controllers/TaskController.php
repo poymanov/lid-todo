@@ -47,6 +47,7 @@ class TaskController extends Controller
         $command->title = $request->get('title');
         $command->description = $request->get('description');
         $command->userId = (int) auth()->id();
+        $command->steps = $request->has('steps') ? $request->get('steps') : [];
 
         try {
             $handler->handle($command);

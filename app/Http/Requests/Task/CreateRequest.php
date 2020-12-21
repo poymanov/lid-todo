@@ -28,6 +28,8 @@ class CreateRequest extends FormRequest
         return [
             'title' => 'required|string',
             'description' => 'required|string',
+            'steps' => 'array',
+            'steps.*' => 'string|max:255',
         ];
     }
 }

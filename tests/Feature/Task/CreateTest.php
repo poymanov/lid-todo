@@ -55,6 +55,7 @@ class CreateTest extends TestCase
         $response->assertSee('Название');
         $response->assertSee('Описание');
         $response->assertSee('Создать');
+        $response->assertSee('Добавить');
     }
 
     /**
@@ -89,6 +90,36 @@ class CreateTest extends TestCase
             'description' => $task->description,
             'user_id' => $user->id,
             'completed' => 0,
+        ]);
+
+        $response->assertRedirect('/tasks');
+    }
+
+    /**
+     * Успешное создание задачи с шагами
+     */
+    public function test_create_successful_with_steps()
+    {
+        $user = User::factory()->create();
+        $this->signIn($user);
+
+        $task = Task::factory()->makeOne();
+        $response = $this->post(self::CREATE_TASK_URL, array_merge($task->toArray(), [
+            'steps' => ['step 1']
+        ]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertSessionHas('alert.success');
+
+        $this->assertDatabaseHas('tasks', [
+            'title' => $task->title,
+            'description' => $task->description,
+            'user_id' => $user->id,
+            'completed' => 0,
+        ]);
+
+        $this->assertDatabaseHas('steps', [
+            'title' => 'step 1',
         ]);
 
         $response->assertRedirect('/tasks');
