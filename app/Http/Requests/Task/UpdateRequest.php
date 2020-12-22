@@ -28,6 +28,8 @@ class UpdateRequest extends FormRequest
         return [
             'title' => 'required|string|max:255',
             'description' => 'required|string',
+            'steps' => 'array',
+            'steps.*' => 'string|max:255',
         ];
     }
 }

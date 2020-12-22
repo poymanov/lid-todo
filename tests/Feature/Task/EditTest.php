@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Task;
 
+use App\Models\Step;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -52,6 +53,24 @@ class EditTest extends TestCase
 
         $response->assertSee($task->title);
         $response->assertSee($task->description);
+    }
+
+    /**
+     * На странице редактирования задачи выводятся данные по шагам задачи
+     */
+    public function test_form_with_steps()
+    {
+        $user = User::factory()->create();
+        $this->signIn($user);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $stepFirst = Step::factory()->create(['task_id' => $task->id]);
+        $stepSecond = Step::factory()->create(['task_id' => $task->id]);
+
+        $response = $this->get(self::BASE_URL . $task->id . '/edit');
+
+        $response->assertSee($stepFirst->title);
+        $response->assertSee($stepSecond->description);
     }
 
     /**
@@ -122,6 +141,44 @@ class EditTest extends TestCase
             'id' => $task->id,
             'title' => $title,
             'description' => $description,
+        ]);
+
+        $response->assertRedirect('/tasks');
+    }
+
+    /**
+     * Успешное редактирование задачи
+     */
+    public function test_update_steps_successful()
+    {
+        $user = User::factory()->create();
+        $this->signIn($user);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $stepFirst = Step::factory()->create(['task_id' => $task->id]);
+        $stepSecond = Step::factory()->create(['task_id' => $task->id]);
+
+        $response = $this->patch(self::BASE_URL . $task->id, array_merge($task->toArray(), [
+            'steps' => ['step 1', 'step 2'],
+            'stepsIds' => [$stepFirst->id, ''],
+        ]));
+
+        $response->assertSessionHasNoErrors();
+        $response->assertSessionHas('alert.success');
+
+        $this->assertDatabaseHas('steps', [
+            'title' => 'step 1',
+            'task_id' => $task->id,
+        ]);
+
+        $this->assertDatabaseHas('steps', [
+            'title' => 'step 2',
+            'task_id' => $task->id,
+        ]);
+
+        $this->assertDatabaseMissing('steps', [
+            'id' => $stepSecond->id,
+            'task_id' => $task->id,
         ]);
 
         $response->assertRedirect('/tasks');

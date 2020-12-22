@@ -13,6 +13,7 @@ use App\UseCase\Task\Update;
 use App\UseCase\Task\Delete;
 use App\UseCase\Task\Complete;
 use App\UseCase\Task\Incomplete;
+use Illuminate\Http\Request;
 
 class TaskController extends Controller
 {
@@ -80,6 +81,8 @@ class TaskController extends Controller
         $command->id = $task->id;
         $command->title = $request->get('title');
         $command->description = $request->get('description');
+        $command->steps = $request->has('steps') ? $request->get('steps') : [];
+        $command->stepsIds = $request->has('stepsIds') ? $request->get('stepsIds') : [];
 
         try {
             $handler->handle($command);

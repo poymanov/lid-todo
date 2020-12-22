@@ -19,4 +19,9 @@ class Task extends Model
     protected $casts = [
         'completed' => 'boolean',
     ];
+
+    public function steps()
+    {
+        return $this->hasMany(Step::class);
+    }
 }
