@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Tests\Feature\Task;
 
+use App\Models\Step;
 use App\Models\Task;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -60,8 +61,27 @@ class ShowTest extends TestCase
         $task = Task::factory()->create(['user_id' => $user->id]);
 
         $response = $this->get(self::BASE_URL . $task->id);
+        $response->assertDontSee('Шаги');
         $response->assertSee($task->title);
         $response->assertSee($task->description);
+    }
+
+    /**
+     * На странице просмотра задачи выводятся данные по шагам этой задачи
+     */
+    public function test_show_task_page_with_task_steps_rendered()
+    {
+        $user = User::factory()->create();
+        $this->signIn($user);
+
+        $task = Task::factory()->create(['user_id' => $user->id]);
+        $stepFirst = Step::factory()->create(['task_id' => $task->id]);
+        $stepSecond = Step::factory()->create(['task_id' => $task->id]);
+
+        $response = $this->get(self::BASE_URL . $task->id);
+        $response->assertSee('Шаги');
+        $response->assertSee($stepFirst->title);
+        $response->assertSee($stepSecond->title);
     }
 
     /**

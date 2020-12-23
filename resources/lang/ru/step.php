@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'steps' => 'Шаги',
     'add' => 'Добавить',
     'remove' => 'Удалить',
     'description' => 'Описание шага',

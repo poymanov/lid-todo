@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'steps' => 'Steps',
     'add' => 'Add',
     'remove' => 'Remove',
     'description' => 'Step description',

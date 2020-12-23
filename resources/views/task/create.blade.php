@@ -60,7 +60,7 @@
                                         </div>
                                     </div>
                                     <div class="px-4 py-5 bg-white space-y-6 sm:p-6">
-                                        <div class="text-xl mb-2">Шаги</div>
+                                        <div class="text-xl mb-2">{{ __('step.steps') }}</div>
                                         @if ($errors->has('steps.*'))
                                             <span class="text-red-500">{{ __('step.validation_errors') }}</span>
                                         @endif

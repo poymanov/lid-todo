@@ -64,6 +64,27 @@
                                 @endif
                             </dd>
                         </div>
+                        @if($task->steps()->exists())
+                            <div class="bg-white px-4 py-5 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-6">
+                                <dt class="text-sm font-medium text-gray-500">
+                                    {{ __('step.steps') }}
+                                </dt>
+                                <dd class="mt-1 text-sm text-gray-900 sm:mt-0 sm:col-span-2">
+                                    <ul class="border border-gray-200 rounded-md divide-y divide-gray-200">
+                                        @foreach($task->steps as $step)
+                                            <li class="pl-3 pr-4 py-3 flex items-center justify-between text-sm">
+                                                <div class="w-0 flex-1 flex items-center">
+                                                    <svg class="flex-shrink-0 h-5 w-5 text-gray-400" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                                                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 1.414L10.586 9H7a1 1 0 100 2h3.586l-1.293 1.293a1 1 0 101.414 1.414l3-3a1 1 0 000-1.414z" clip-rule="evenodd" />
+                                                    </svg>
+                                                    <span class="ml-2 flex-1 w-0 truncate">{{ $step->title }}</span>
+                                                </div>
+                                            </li>
+                                        @endforeach
+                                    </ul>
+                                </dd>
+                            </div>
+                        @endif
                     </dl>
                 </div>
                 </div>
